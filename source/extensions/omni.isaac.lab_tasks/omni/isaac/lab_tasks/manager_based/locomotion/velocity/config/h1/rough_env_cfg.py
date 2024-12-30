@@ -8,6 +8,7 @@ from omni.isaac.lab.managers import SceneEntityCfg
 from omni.isaac.lab.utils import configclass
 
 import omni.isaac.lab_tasks.manager_based.locomotion.velocity.mdp as mdp
+import omni.isaac.lab_tasks.manager_based.locomotion.velocity.config.spot.mdp as spot_mdp
 from omni.isaac.lab_tasks.manager_based.locomotion.velocity.velocity_env_cfg import (
     LocomotionVelocityRoughEnvCfg,
     RewardsCfg,
@@ -50,6 +51,16 @@ class H1Rewards(RewardsCfg):
             "asset_cfg": SceneEntityCfg("robot", body_names=".*ankle_roll_link"),
         },
     )
+    foot_clearance = RewTerm(
+        func=spot_mdp.foot_clearance_reward,
+        weight=-5,
+        params={
+            "std": 0.5,
+            "tanh_mult": 2.0,
+            "target_height": 1.5,
+            "asset_cfg": SceneEntityCfg("robot", body_names=".*_wrist_yaw_link"),
+        },
+    )    
     # Penalize ankle joint limits
     dof_pos_limits = RewTerm(
         func=mdp.joint_pos_limits, weight=-1.0, params={"asset_cfg": SceneEntityCfg("robot", joint_names=".*_ankle_.*")}
