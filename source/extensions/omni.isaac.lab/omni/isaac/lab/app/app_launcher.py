@@ -604,7 +604,7 @@ class AppLauncher:
         if "--verbose" not in sys.argv and "--info" not in sys.argv:
             sys.stdout = open(os.devnull, "w")  # noqa: SIM115
         # launch simulation app
-        self._app = SimulationApp(self._sim_app_config, experience=self._sim_experience_file)
+        self._app = SimulationApp(self._sim_app_config)
         # enable sys stdout and stderr
         sys.stdout = sys.__stdout__
 
@@ -680,7 +680,7 @@ class AppLauncher:
 
         # set the nucleus directory manually to the latest published Nucleus
         # note: this is done to ensure prior versions of Isaac Sim still use the latest assets
-        assets_path = "http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/4.2"
+        assets_path = "d:/4.2"
         carb_settings_iface.set_string("/persistent/isaac/asset_root/default", assets_path)
         carb_settings_iface.set_string("/persistent/isaac/asset_root/cloud", assets_path)
         carb_settings_iface.set_string("/persistent/isaac/asset_root/nvidia", assets_path)
